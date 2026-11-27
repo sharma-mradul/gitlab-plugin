@@ -31,13 +31,11 @@ public class PipelineBuildAction extends BuildWebHookAction {
         LOGGER.log(Level.FINE, "Pipeline event: {0}", toPrettyPrint(json));
         this.project = project;
         this.pipelineBuildHook = JsonUtil.read(json, PipelineHook.class);
-        this.pipelineBuildHook.setRawPayload(json);
         this.secretToken = secretToken;
     }
 
     /**
      * Alternative Constructor which takes in an already deserialized Json Tree.
-     *
      * @param project Jenkins Project Item
      * @param json Payload Json Tree
      * @param secretToken Secret Token
@@ -46,7 +44,6 @@ public class PipelineBuildAction extends BuildWebHookAction {
         LOGGER.log(Level.FINE, "Pipeline event: {0}", toPrettyPrint(json));
         this.project = project;
         this.pipelineBuildHook = JsonUtil.read(json, PipelineHook.class);
-        this.pipelineBuildHook.setRawPayload(json.toString());
         this.secretToken = secretToken;
     }
 

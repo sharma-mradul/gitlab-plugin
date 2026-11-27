@@ -1,6 +1,5 @@
 package com.dabsquared.gitlabjenkins.trigger.handler;
 
-import com.dabsquared.gitlabjenkins.GitLabPushTrigger;
 import com.dabsquared.gitlabjenkins.action.BranchQueueAction;
 import com.dabsquared.gitlabjenkins.cause.CauseData;
 import com.dabsquared.gitlabjenkins.cause.GitLabWebHookCause;
@@ -106,9 +105,7 @@ public abstract class AbstractWebHookTriggerHandler<H extends WebHook> implement
 
     protected Action[] createActions(Job<?, ?> job, H hook) {
         ArrayList<Action> actions = new ArrayList<>();
-        GitLabPushTrigger trigger = GitLabPushTrigger.getFromJob(job);
-        String rawPayload = trigger != null && trigger.getExposeRawWebhookPayload() ? hook.getRawPayload() : null;
-        actions.add(new CauseAction(new GitLabWebHookCause(retrieveCauseData(hook), rawPayload)));
+        actions.add(new CauseAction(new GitLabWebHookCause(retrieveCauseData(hook))));
         actions.add(new BranchQueueAction(getSourceBranch(hook)));
         try {
             SCMTriggerItem item = SCMTriggerItem.SCMTriggerItems.asSCMTriggerItem(job);
